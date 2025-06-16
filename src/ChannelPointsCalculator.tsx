@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -41,6 +41,21 @@ export default function ChannelPointsCalculator() {
     const days = Math.ceil(remaining / totalDaily || 1);
     setDaysRequired(days);
   };
+
+  useEffect(() => {
+    // Recalculate when any input changes
+    calculate();
+  }, [
+    currentPoints,
+    targetPoints,
+    hoursPerDay,
+    subTier,
+    includeRaids,
+    includeBits,
+    includeGiftSubs,
+    includeWatchStreak,
+    watchStreakDays
+  ]);
 
   return (
     <div className="p-6 space-y-4 max-w-xl mx-auto">
@@ -85,7 +100,7 @@ export default function ChannelPointsCalculator() {
               </div>
             )}
           </div>
-          <Button onClick={calculate}>Calculate</Button>
+          {/* <Button onClick={calculate}>Calculate</Button> */}
 
           {dailyPoints > 0 && (
             <div className="pt-4 space-y-2">
